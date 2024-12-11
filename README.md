@@ -5,10 +5,10 @@ Mój pierwszy program konsolowy - projekt realizowany w trakcie kursu JavaDevelo
 Podstawowe możliwości programu:
 * Pozwala na logowanie wielu użytkowników, w tym z uprawnieniami administratora.
 * Pozawala na podgląd, edycja oraz zarzązdanie projektami
- * Wprowadzanie i edycja nazwy projektu
- * Wprowadzanie i edycja opisu projektu
- * Możliwość dodawania komentarzy przez użytkowników
- * Możliwość aktualizacji postępu danego etapu prac
+   *  Wprowadzanie i edycja nazwy projektu
+   *  Wprowadzanie i edycja opisu projektu
+   *  Możliwość dodawania komentarzy przez użytkowników
+   *  Możliwość aktualizacji postępu danego etapu prac
 * Dla zwiększenia przejrzystości program po uruchomieniu pozwala na przejście na stronę internetową, gdzie projekty mają przyjazną szatę graficzną (wykorzystano bibliotekę bootstrap)
 * Możwliość dodawania oraz zarządzania użytkownikami
   
