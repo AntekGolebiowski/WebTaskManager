@@ -12,6 +12,8 @@ public class LoggerManager {
             for (Handler handler : logger.getHandlers()) {
                 logger.removeHandler(handler);
             }
+            logger.setUseParentHandlers(false);
+
             ConsoleHandler consoleHandler = new ConsoleHandler();
             consoleHandler.setLevel(Level.ALL);
             consoleHandler.setFormatter(new CustomFormatter());
@@ -23,7 +25,6 @@ public class LoggerManager {
             fileHandler.setFormatter(new SimpleFormatter());
             logger.addHandler(fileHandler);
 
-            logger.setLevel(Level.ALL);
 
         } catch (IOException e) {
             logger.severe("Błąd przy konfiguracji loggera: " + e.getMessage());

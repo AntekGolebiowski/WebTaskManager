@@ -13,9 +13,11 @@ import java.util.logging.Logger;
 public class users {
     private static final Logger logger = LoggerManager.getLogger();
 
-    static int userId = 0;
+    static int userId = -1;
+    static Enums whereIsUser = Enums.NOWHERE;
 
     public static boolean login() {
+        //todo: zamiast podawać login poproś o imię i nazwisko i zamień je na login
         System.out.print("Podaj login: ");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
@@ -31,6 +33,14 @@ public class users {
             System.out.println(config.RED + "Podano nieprawidłowe hasło!" + config.RESET);
             System.out.print("Podaj hasło: ");
             password = scanner.nextLine();
+        }
+
+        if(files.loginUserPassword(username, password))
+        {
+            userId = files.getUserId(username);
+            return true;
+        }else {
+            logger.warning("Podano nieprawidłowe hasło!");
         }
         return false;
     }
@@ -78,18 +88,14 @@ public class users {
             System.out.println("Wprowadź " + config.BLUE_BACKGROUND + "TAK" + config.RESET + " lub " + config.BLUE_BACKGROUND + "NIE" + config.RESET);
             sample = scanner.nextLine();
         }
-        boolean sampleFiles = false;
-        if ("tak".equalsIgnoreCase(sample)) {
-            sampleFiles = true;
-        }
+        boolean sampleFiles = "tak".equalsIgnoreCase(sample);
 
         logger.info("Rozpoczynam instalację systemu...");
-        if (sampleFiles) {
-            if (filesSample.createSamples()) {
-                logger.info("Utworzono przykładową bazę użytkowników oraz zadań...");
-            } else {
-                logger.warning("Tworzenie przykładowej bazy użytkowników oraz zadań zakończone niepowodzeniem...");
-            }
+        if(files.install(sampleFiles)) {
+            logger.info("Utworzono wszystkie pliki...");
+        }else{
+            logger.severe("Instalacja zakończona niepowodzeniem, praca programu nie może być kontynuowana!");
+            Main.ShoutDown();
         }
         Path path = Paths.get("users.csv");
         try {
