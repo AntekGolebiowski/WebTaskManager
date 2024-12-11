@@ -80,3 +80,7 @@ Dec 09, 2024 12:24:08 AM pl.coderslab.files systemCheck
 INFO: Weryfikacja plików zakończona powodzeniem.
 Dec 09, 2024 12:24:08 AM pl.coderslab.http runHTTP
 INFO: Uruchomiono serwer HTTP: http://localhost:8080/
+Dec 11, 2024 12:08:28 PM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 11, 2024 12:08:28 PM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
