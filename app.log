@@ -1,26 +1,82 @@
-Dec 08, 2024 9:04:22 PM pl.coderslab.Main main
-INFO: Uruchomiono aplikację
-Dec 08, 2024 9:04:22 PM pl.coderslab.files systemCheck
+Dec 08, 2024 11:51:10 PM pl.coderslab.files systemCheck
 WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
-Dec 08, 2024 9:04:33 PM pl.coderslab.http runHTTP
-INFO: Uruchomiono serwer HTTP: http://localhost:8080/
-Dec 08, 2024 9:07:02 PM pl.coderslab.Main main
-INFO: Uruchomiono aplikację
-Dec 08, 2024 9:07:03 PM pl.coderslab.files systemCheck
+Dec 08, 2024 11:55:49 PM pl.coderslab.files systemCheck
 WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
-Dec 08, 2024 9:07:12 PM pl.coderslab.http runHTTP
-INFO: Uruchomiono serwer HTTP: http://localhost:8080/
-Dec 08, 2024 9:12:48 PM pl.coderslab.Main main
+Dec 09, 2024 12:01:43 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:02:04 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:02:18 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:03:12 AM pl.coderslab.Main main
 INFO: Uruchomiono aplikację
-Dec 08, 2024 9:12:48 PM pl.coderslab.files systemCheck
+Dec 09, 2024 12:03:12 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:03:35 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:03:35 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:03:56 AM pl.coderslab.users createAdminAccount
+INFO: Rozpoczynam instalację systemu...
+Dec 09, 2024 12:03:56 AM pl.coderslab.users createAdminAccount
+INFO: Instalacja zakończona powodzeniem, możesz się zalogować.
+Dec 09, 2024 12:03:56 AM pl.coderslab.http runHTTP
+INFO: Uruchomiono serwer HTTP: http://localhost:8080/
+Dec 09, 2024 12:04:55 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:04:55 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:06:37 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:06:37 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:08:56 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:08:56 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:13:33 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:13:33 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:15:37 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:15:37 AM pl.coderslab.files systemCheck
+WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:15:48 AM pl.coderslab.users createAdminAccount
+INFO: Rozpoczynam instalację systemu...
+Dec 09, 2024 12:15:48 AM pl.coderslab.users createAdminAccount
+INFO: Utworzono przykładową bazę użytkowników oraz zadań...
+Dec 09, 2024 12:15:48 AM pl.coderslab.users createAdminAccount
+INFO: Instalacja zakończona powodzeniem, możesz się zalogować.
+Dec 09, 2024 12:15:48 AM pl.coderslab.http runHTTP
+INFO: Uruchomiono serwer HTTP: http://localhost:8080/
+Dec 09, 2024 12:16:48 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:16:48 AM pl.coderslab.files systemCheck
 INFO: Weryfikacja plików zakończona powodzeniem.
-Dec 08, 2024 9:12:48 PM pl.coderslab.http runHTTP
+Dec 09, 2024 12:16:48 AM pl.coderslab.http runHTTP
 INFO: Uruchomiono serwer HTTP: http://localhost:8080/
-Dec 08, 2024 9:15:43 PM pl.coderslab.Main main
+Dec 09, 2024 12:17:47 AM pl.coderslab.Main main
 INFO: Uruchomiono aplikację
-Dec 08, 2024 9:15:43 PM pl.coderslab.files systemCheck
+Dec 09, 2024 12:17:47 AM pl.coderslab.files systemCheck
 WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
-Dec 08, 2024 9:15:53 PM pl.coderslab.http runHTTP
+Dec 09, 2024 12:18:01 AM pl.coderslab.users createAdminAccount
+INFO: Rozpoczynam instalację systemu...
+Dec 09, 2024 12:18:01 AM pl.coderslab.users createAdminAccount
+INFO: Utworzono przykładową bazę użytkowników oraz zadań...
+Dec 09, 2024 12:18:01 AM pl.coderslab.users createAdminAccount
+INFO: Instalacja zakończona powodzeniem, możesz się zalogować.
+Dec 09, 2024 12:18:01 AM pl.coderslab.http runHTTP
 INFO: Uruchomiono serwer HTTP: http://localhost:8080/
-Dec 08, 2024 9:17:09 PM pl.coderslab.files systemCheck
-WARNING: Nie znaleziono pliku użytkowników. Rozpoczynam instalację.
+Dec 09, 2024 12:21:16 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:21:16 AM pl.coderslab.files systemCheck
+INFO: Weryfikacja plików zakończona powodzeniem.
+Dec 09, 2024 12:21:16 AM pl.coderslab.http runHTTP
+INFO: Uruchomiono serwer HTTP: http://localhost:8080/
+Dec 09, 2024 12:24:08 AM pl.coderslab.Main main
+INFO: Uruchomiono aplikację
+Dec 09, 2024 12:24:08 AM pl.coderslab.files systemCheck
+INFO: Weryfikacja plików zakończona powodzeniem.
+Dec 09, 2024 12:24:08 AM pl.coderslab.http runHTTP
+INFO: Uruchomiono serwer HTTP: http://localhost:8080/

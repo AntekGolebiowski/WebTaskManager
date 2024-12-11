@@ -1,6 +1,10 @@
 package pl.coderslab;
 
+import java.util.logging.Logger;
+
 public class config {
+    private static final Logger logger = LoggerManager.getLogger();
+
 
     public static final int NAME_MIN_LENGTH = 3;
     public static final int SURNAME_MIN_LENGTH = 3;

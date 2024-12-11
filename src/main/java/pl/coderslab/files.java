@@ -1,8 +1,11 @@
 package pl.coderslab;
 
 import java.nio.file.*;
+import java.util.logging.Logger;
 
 public class files {
+    private static final Logger logger = LoggerManager.getLogger();
+
     public static boolean systemCheck()
     {
         //todo: jeśli brak pliku użytkowników zwróc false
@@ -10,10 +13,10 @@ public class files {
         Path path = Paths.get("users.csv");
         if(!Files.exists(path))
         {
-            Main.logger.warning("Nie znaleziono pliku użytkowników. Rozpoczynam instalację.");
+            logger.warning("Nie znaleziono pliku użytkowników. Rozpoczynam instalację.");
             return false;
         }
-        Main.logger.info("Weryfikacja plików zakończona powodzeniem.");
+        logger.info("Weryfikacja plików zakończona powodzeniem.");
         return true;
     }
 }

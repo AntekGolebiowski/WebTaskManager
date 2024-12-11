@@ -8,14 +8,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class users {
+    private static final Logger logger = LoggerManager.getLogger();
+
     static int userId = 0;
+
     public static boolean login() {
         System.out.print("Podaj login: ");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
-        while(username.length() < config.USERNAME_MIN_LENGTH || username.contains("|")) {
+        while (username.length() < config.USERNAME_MIN_LENGTH || username.contains(",")) {
             System.out.println(config.RED + "Podano nieprawidłowy login!" + config.RESET);
             System.out.print("Podaj login: ");
             username = scanner.nextLine();
@@ -23,7 +27,7 @@ public class users {
 
         System.out.print("Podaj hasło: ");
         String password = scanner.nextLine();
-        while(password == null || password.isEmpty()) {
+        while (password == null || password.isEmpty()) {
             System.out.println(config.RED + "Podano nieprawidłowe hasło!" + config.RESET);
             System.out.print("Podaj hasło: ");
             password = scanner.nextLine();
@@ -31,22 +35,21 @@ public class users {
         return false;
     }
 
-    public static void createAdminAccount()
-    {
+    public static void createAdminAccount() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(config.BLUE + "Tworzenie konta administratora" + config.RESET);
         System.out.print("Wprowadź login: ");
         String username = scanner.nextLine();
-        while(username.length() < config.USERNAME_MIN_LENGTH || username.contains("|")) {
-            System.out.println(config.RED + "Podano nieprawidłowy login! Login musi zawierać conajmniej "+config.USERNAME_MIN_LENGTH+" znaki." + config.RESET);
+        while (username.length() < config.USERNAME_MIN_LENGTH || username.contains(",")) {
+            System.out.println(config.RED + "Podano nieprawidłowy login! Login musi zawierać conajmniej " + config.USERNAME_MIN_LENGTH + " znaki." + config.RESET);
             System.out.print("Wprowadź login: ");
             username = scanner.nextLine();
         }
 
         System.out.print("Wprowadź hasło: ");
         String password = scanner.nextLine();
-        while(password.length() < config.PASSWORD_MIN_LENGTH) {
-            System.out.println(config.RED + "Podano nieprawidłowy hasło! Hasło musi zawierać conajmniej "+config.PASSWORD_MIN_LENGTH+" znaki." + config.RESET);
+        while (password.length() < config.PASSWORD_MIN_LENGTH) {
+            System.out.println(config.RED + "Podano nieprawidłowy hasło! Hasło musi zawierać conajmniej " + config.PASSWORD_MIN_LENGTH + " znaki." + config.RESET);
             System.out.print("Wprowadź hasło: ");
             password = scanner.nextLine();
         }
@@ -54,35 +57,52 @@ public class users {
 
         System.out.print("Wprowadź imię: ");
         String name = scanner.nextLine();
-        while(name.length() < config.NAME_MIN_LENGTH || name.contains("|")) {
-            System.out.println(config.RED + "Podano nieprawidłowy imię! Imię musi zawierać conajmniej "+config.NAME_MIN_LENGTH+" znaki." + config.RESET);
+        while (name.length() < config.NAME_MIN_LENGTH || name.contains(",")) {
+            System.out.println(config.RED + "Podano nieprawidłowy imię! Imię musi zawierać conajmniej " + config.NAME_MIN_LENGTH + " znaki." + config.RESET);
             System.out.print("Wprowadź login: ");
             name = scanner.nextLine();
         }
 
         System.out.print("Wprowadź naziwsko: ");
         String surname = scanner.nextLine();
-        while(surname.length() < config.SURNAME_MIN_LENGTH || surname.contains("|")) {
-            System.out.println(config.RED + "Podano nieprawidłowy imię! Imię musi zawierać conajmniej "+config.SURNAME_MIN_LENGTH+" znaki." + config.RESET);
+        while (surname.length() < config.SURNAME_MIN_LENGTH || surname.contains(",")) {
+            System.out.println(config.RED + "Podano nieprawidłowy imię! Imię musi zawierać conajmniej " + config.SURNAME_MIN_LENGTH + " znaki." + config.RESET);
             System.out.print("Wprowadź login: ");
             surname = scanner.nextLine();
         }
 
-        System.out.println(config.BLUE + "Rozpoczynam instalację systemu..." + config.RESET);
-        //todo: utwórz pliki
+        System.out.println("Czy chcesz utworzyć przykładową bazę użytkowników oraz zadań?");
+        System.out.println("Wprowadź " + config.BLUE_BACKGROUND + "TAK" + config.RESET + " lub " + config.BLUE_BACKGROUND + "NIE" + config.RESET);
+        String sample = scanner.nextLine();
+        while (sample == null || sample.isEmpty() || (!"tak".equalsIgnoreCase(sample) && !"nie".equalsIgnoreCase(sample))) {
+            System.out.println("Wprowadź " + config.BLUE_BACKGROUND + "TAK" + config.RESET + " lub " + config.BLUE_BACKGROUND + "NIE" + config.RESET);
+            sample = scanner.nextLine();
+        }
+        boolean sampleFiles = false;
+        if ("tak".equalsIgnoreCase(sample)) {
+            sampleFiles = true;
+        }
+
+        logger.info("Rozpoczynam instalację systemu...");
+        if (sampleFiles) {
+            if (filesSample.createSamples()) {
+                logger.info("Utworzono przykładową bazę użytkowników oraz zadań...");
+            } else {
+                logger.warning("Tworzenie przykładowej bazy użytkowników oraz zadań zakończone niepowodzeniem...");
+            }
+        }
         Path path = Paths.get("users.csv");
-        try{
-            Files.writeString(path, "0,"+username+","+password+","+name+","+surname+",true\n", StandardOpenOption.APPEND,StandardOpenOption.CREATE);
+        try {
+            Files.writeString(path, "0," + username + "," + password + "," + name + "," + surname + ",true\n", StandardOpenOption.APPEND, StandardOpenOption.CREATE);
         } catch (IOException e) {
-            Main.logger.warning("Utworzenie pliku użytkowników zakończyło się niepowodzeniem! " + e.getMessage());
-            System.out.println(config.RED + "Praca programu nie może być kontynuowana" + config.RESET);
+            logger.severe("Utworzenie pliku użytkowników zakończyło się niepowodzeniem! Nie można kontynuować pracy w aplikacji." + e.getMessage());
             Main.ShoutDown();
         }
 
         System.out.println(config.BLUE + "Instalacja zakończona powodzeniem, możesz się zalogować." + config.RESET);
-
-        userId = 0;
+        logger.info("Instalacja zakończona powodzeniem, możesz się zalogować.");
     }
+
     public static String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
