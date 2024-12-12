@@ -1,5 +1,6 @@
 package pl.coderslab;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.*;
 
@@ -24,7 +25,7 @@ public class Main {
 
             logger.info("Witaj " + files.getUserName(users.userId) + "!");
 
-            users.whereIsUser = Enums.PROJECTS;
+            projects.loadProjects();
             projects.showProjects();
 
             Scanner scanner = new Scanner(System.in);
@@ -42,7 +43,11 @@ public class Main {
     public static void ShoutDown() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Zamykanie zasobów...");
-            //todo: zamknięcie HTTP
+            try {
+                http.clientSocket.close();
+            } catch (IOException e) {
+                logger.severe("Nie udało się zamknąc socketu HTTP. " + e.getMessage());
+            }
         }));
 
         System.out.println("Zamknięcie aplikacji...");

@@ -15,9 +15,9 @@ public class users {
 
     static int userId = -1;
     static Enums whereIsUser = Enums.NOWHERE;
+    static int userProjectPreviewID = -1;
 
     public static boolean login() {
-        //todo: zamiast podawać login poproś o imię i nazwisko i zamień je na login
         System.out.print("Podaj login: ");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
@@ -48,22 +48,6 @@ public class users {
     public static void createAdminAccount() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(config.BLUE + "Tworzenie konta administratora" + config.RESET);
-        System.out.print("Wprowadź login: ");
-        String username = scanner.nextLine();
-        while (username.length() < config.USERNAME_MIN_LENGTH || username.contains(",")) {
-            System.out.println(config.RED + "Podano nieprawidłowy login! Login musi zawierać conajmniej " + config.USERNAME_MIN_LENGTH + " znaki." + config.RESET);
-            System.out.print("Wprowadź login: ");
-            username = scanner.nextLine();
-        }
-
-        System.out.print("Wprowadź hasło: ");
-        String password = scanner.nextLine();
-        while (password.length() < config.PASSWORD_MIN_LENGTH) {
-            System.out.println(config.RED + "Podano nieprawidłowy hasło! Hasło musi zawierać conajmniej " + config.PASSWORD_MIN_LENGTH + " znaki." + config.RESET);
-            System.out.print("Wprowadź hasło: ");
-            password = scanner.nextLine();
-        }
-        password = hashPassword(password);
 
         System.out.print("Wprowadź imię: ");
         String name = scanner.nextLine();
@@ -81,6 +65,20 @@ public class users {
             surname = scanner.nextLine();
         }
 
+        String username = methods.removePolishCharacters(name.substring(0,1).toLowerCase()) + "." + methods.removePolishCharacters(surname.toLowerCase());
+
+        System.out.println("Twój login to: " + config.BLUE + username + config.RESET);
+
+        System.out.print("Wprowadź hasło: ");
+        String password = scanner.nextLine();
+        while (password.length() < config.PASSWORD_MIN_LENGTH) {
+            System.out.println(config.RED + "Podano nieprawidłowy hasło! Hasło musi zawierać conajmniej " + config.PASSWORD_MIN_LENGTH + " znaki." + config.RESET);
+            System.out.print("Wprowadź hasło: ");
+            password = scanner.nextLine();
+        }
+
+        password = hashPassword(password);
+
         System.out.println("Czy chcesz utworzyć przykładową bazę użytkowników oraz zadań?");
         System.out.println("Wprowadź " + config.BLUE_BACKGROUND + "TAK" + config.RESET + " lub " + config.BLUE_BACKGROUND + "NIE" + config.RESET);
         String sample = scanner.nextLine();
@@ -91,17 +89,18 @@ public class users {
         boolean sampleFiles = "tak".equalsIgnoreCase(sample);
 
         logger.info("Rozpoczynam instalację systemu...");
+        Path path = Paths.get("users.csv");
+        try {
+            Files.writeString(path, "0," + username + "," + password + "," + name + "," + surname + ",true", StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            logger.severe("Utworzenie pliku użytkowników zakończyło się niepowodzeniem! Nie można kontynuować pracy w aplikacji." + e.getMessage());
+            Main.ShoutDown();
+        }
+
         if(files.install(sampleFiles)) {
             logger.info("Utworzono wszystkie pliki...");
         }else{
             logger.severe("Instalacja zakończona niepowodzeniem, praca programu nie może być kontynuowana!");
-            Main.ShoutDown();
-        }
-        Path path = Paths.get("users.csv");
-        try {
-            Files.writeString(path, "0," + username + "," + password + "," + name + "," + surname + ",true\n", StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-        } catch (IOException e) {
-            logger.severe("Utworzenie pliku użytkowników zakończyło się niepowodzeniem! Nie można kontynuować pracy w aplikacji." + e.getMessage());
             Main.ShoutDown();
         }
 
