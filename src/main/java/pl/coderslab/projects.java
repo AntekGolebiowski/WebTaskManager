@@ -1,6 +1,5 @@
 package pl.coderslab;
 
-import javax.sound.midi.Patch;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -271,7 +270,7 @@ public class projects {
         showProjects("id");
     }
 
-    public static boolean loadProjects() {
+    public static void loadProjects() {
         File file = new File("projects.csv");
         if (file.exists()) {
             if (file.length() > 0) {
@@ -291,7 +290,7 @@ public class projects {
                 int tempProgressBackend;
                 int tempProgressTesting;
                 int tempProgressOptimization;
-                int tempComments = 0;
+                int tempComments;
 
 
                 try (BufferedReader reader = Files.newBufferedReader(path)) {
@@ -325,7 +324,6 @@ public class projects {
                 }
             }
         }
-        return true;
     }
 
     public static void projectsEditName(int id, String name) {
@@ -457,7 +455,7 @@ public class projects {
                     progressBar.append("_");
                 }
             }
-            progressBar.append(config.BRIGHT_BLACK + "] " + progress + "%");
+            progressBar.append(config.BRIGHT_BLACK + "] ").append(progress).append("%");
         } else {
             progressBar.append(config.RESET + "[");
             for (int i = 0; i < 20; i++) {
@@ -469,7 +467,7 @@ public class projects {
                     progressBar.append("_");
                 }
             }
-            progressBar.append(config.RESET + "] " + progress + "%");
+            progressBar.append(config.RESET + "] ").append(progress).append("%");
         }
 
         return progressBar.toString();
@@ -513,7 +511,6 @@ public class projects {
         System.out.println(config.PURPLE_BACKGROUND + "KOMENTARZE DO PROJEKTU NR #" + id + config.RESET);
         Path path = Paths.get("comments_" + id +".csv");
         int userId;
-        String comment;
         long time;
         boolean commentsFound = false;
         users.whereIsUser = Enums.PROJECT_COMMENTS;
@@ -544,7 +541,6 @@ public class projects {
             System.out.println(config.BRIGHT_BLACK + "Nie znaleziono komentarzy." + config.RESET);
         }
         System.out.println("Dostępne komendy: " + config.BRIGHT_BLACK_BACKGROUND + "KOMENTUJ" + config.RESET + " " + config.BRIGHT_BLACK_BACKGROUND + "WYJDZ" + config.RESET);
-        return;
     }
 
     public static void createProject() {
@@ -650,10 +646,9 @@ public class projects {
         }
 
         showProjects();
-        return;
     }
 
-    public static void editProject(int id) {
+    public static void editProject() {
 
         System.out.println(config.BRIGHT_BLACK_BACKGROUND + "EDYTUJ NAZWA #nowa_nazwa" + config.RESET + " - zmienia nazwę projektu");
         System.out.println(config.BRIGHT_BLACK_BACKGROUND + "EDYTUJ OPIS #nowy_opis" + config.RESET + " - zmienia opis projektu");
@@ -661,7 +656,6 @@ public class projects {
         System.out.println(config.BRIGHT_BLACK_BACKGROUND + "EDYTUJ UKONCZONY #tak/nie" + config.RESET + " - oznacza projekt jako ukończony lub nieukończony");
         System.out.println(config.BRIGHT_BLACK_BACKGROUND + "EDYTUJ POSTEP" + config.RESET + " - zmienia postęp projektu");
         System.out.println(config.BRIGHT_BLACK_BACKGROUND + "EDYTUJ TERMIN DD/MM/YYYY" + config.RESET + " - zmienia termin realizacji projektu");
-        return;
     }
 
     public static void deleteProject(int id) {
@@ -705,7 +699,6 @@ public class projects {
         }else{
             System.out.println(config.BRIGHT_BLACK + "Projekt nie został znaleziony." + config.RESET);
         }
-        return;
     }
 
     public static void commentProject(int id) {
@@ -748,7 +741,7 @@ public class projects {
                             sbProjects.append(fileLine).append("\n");
                         }else{
                             int[] separators = files.getSeparatorsIndex(fileLine, "|");
-                            sbProjects.append(fileLine.substring(0, separators[13] + 1));
+                            sbProjects.append(fileLine, 0, separators[13] + 1);
                             sbProjects.append(comments+1);
                             sbProjects.append("\n");
                         }
@@ -768,7 +761,6 @@ public class projects {
             return;
         }
         commentsProject(id);
-        return;
     }
 
 }

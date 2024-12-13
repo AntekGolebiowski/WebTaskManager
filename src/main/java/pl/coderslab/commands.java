@@ -275,7 +275,7 @@ public class commands {
                     System.out.println(config.BRIGHT_BLACK + "Nie posiadasz uprawnień administratora!" + config.RESET);
                     return true;
                 }
-                projects.editProject(users.userProjectPreviewID);
+                projects.editProject();
                 return true;
 
             } else if ("kasuj".equalsIgnoreCase(command)) {

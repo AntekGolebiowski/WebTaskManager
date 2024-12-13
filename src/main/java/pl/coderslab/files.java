@@ -1,14 +1,9 @@
 package pl.coderslab;
 
-import javax.sound.midi.Patch;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -29,8 +24,8 @@ public class files {
         Path path = Paths.get("users.csv");
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            int comma1 = -1;
-            int comma2 = -1;
+            int comma1;
+            int comma2;
 
             while ((line = reader.readLine()) != null) {
                 comma1 = line.indexOf(",");
@@ -38,11 +33,7 @@ public class files {
 
                 if (username.equals(line.substring(comma1 + 1, comma2).trim())) {
                     int[] separators = getSeparatorsIndex(line, ",");
-                    if (users.validatePassword(password, line.substring(separators[1] + 1, separators[2]).trim())) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return users.validatePassword(password, line.substring(separators[1] + 1, separators[2]).trim());
                 }
             }
         } catch (IOException e) {
@@ -55,8 +46,6 @@ public class files {
         Path path = Paths.get("users.csv");
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            int comma1 = -1;
-            int comma2 = -1;
 
             while ((line = reader.readLine()) != null) {
                 if(line.startsWith(id + ","))
@@ -78,8 +67,8 @@ public class files {
         Path path = Paths.get("users.csv");
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
-            int comma1 = -1;
-            int comma2 = -1;
+            int comma1;
+            int comma2;
 
             while ((line = reader.readLine()) != null) {
                 comma1 = line.indexOf(",");
@@ -418,22 +407,6 @@ public class files {
         return true;
     }
 
-    public static int fileLines(String file) {
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            int lineCount = 0;
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    lineCount++;
-                }
-            }
-            return lineCount;
-        } catch (IOException e) {
-            logger.warning("Błąd podczas odczytu pliku " + file + ": " + e.getMessage());
-            return -1;
-        }
-    }
-
     public static void editProjectsFile(int projectId, String newValue, Enums valueToChange) {
         StringBuilder sb = new StringBuilder();
 
@@ -466,7 +439,7 @@ public class files {
                 if (!line.isEmpty()) {
                     if (line.startsWith(projectId + "|")) {
                         int[] separators = getSeparatorsIndex(line, "|");
-                        sb.append(line.substring(0, separators[positionToChange] + 1)).append(newValue).append(line.substring(separators[positionToChange + 1])).append("\n");
+                        sb.append(line, 0, separators[positionToChange] + 1).append(newValue).append(line.substring(separators[positionToChange + 1])).append("\n");
                     } else {
                         sb.append(line).append("\n");
                     }

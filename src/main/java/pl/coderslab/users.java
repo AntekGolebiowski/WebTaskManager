@@ -18,7 +18,7 @@ public class users {
     static Enums whereIsUser = Enums.NOWHERE;
     static int userProjectPreviewID = -1;
 
-    public static boolean login() {
+    public static void login() {
         System.out.print("Podaj login: ");
         Scanner scanner = new Scanner(System.in);
         String username = scanner.nextLine();
@@ -40,11 +40,9 @@ public class users {
         {
             userId = files.getUserId(username);
             userAdmin = files.getUserAdmin(userId);
-            return true;
         }else {
             logger.warning("Podano nieprawidłowe hasło!");
         }
-        return false;
     }
 
     public static void createAdminAccount() {
