@@ -115,7 +115,7 @@ public class http {
                             <div class="container">
                                 <div class="row">
                                     <h1>WebTaskManager</h1>
-                                    <p>Aplikacja przygotowana, bla, bla, bal</p>
+                                    <p>Dowiedz się więcej na temat projektu przechodząc do pliku <a href="https://github.com/AntekGolebiowski/WebTaskManager/blob/main/README.md" target="_blank">README.md</a> w <a href="https://github.com/AntekGolebiowski/WebTaskManager" target="_blank">GitHub</a>.</p>
                                 </div>
                                 <div class="row">
                                     <div class="accordion" id="accordion">
@@ -127,7 +127,7 @@ public class http {
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
                         </body>
                     </html>
-                        """; //todo: html
+                        """;
 
                 String accordion = """
                         <div class="accordion-item">

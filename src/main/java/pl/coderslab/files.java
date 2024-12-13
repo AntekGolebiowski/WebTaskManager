@@ -51,6 +51,29 @@ public class files {
         return false;
     }
 
+    public static boolean getUserAdmin(int id) {
+        Path path = Paths.get("users.csv");
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
+            String line;
+            int comma1 = -1;
+            int comma2 = -1;
+
+            while ((line = reader.readLine()) != null) {
+                if(line.startsWith(id + ","))
+                {
+                    int[] separators = getSeparatorsIndex(line,",");
+                    if(line.substring(separators[4]+1).equalsIgnoreCase("true"))
+                    {
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            logger.severe("Nie udało się otworzyć pliku users.csv. " + e.getMessage());
+        }
+        return false;
+    }
+
     public static int getUserId(String username) {
         Path path = Paths.get("users.csv");
         try (BufferedReader reader = Files.newBufferedReader(path)) {
@@ -135,11 +158,10 @@ public class files {
         if (!samples) {
             return true;
         }
-
         String sampleProjects = """
                 0|Strona internetowa dla sklepu|Stwórz responsywną stronę internetową dla sklepu, która umożliwia użytkownikom przeglądanie produktów, dodawanie ich do koszyka i finalizowanie zamówień. Wykorzystaj system zarządzania treścią (CMS) do łatwej edycji produktów i stron. Integracja z bramkami płatności oraz systemem dostawy jest niezbędna.|false|true|1733936993846|1739575023558|100|100|100|100|100|100|100|5
                 1|System zarządzania projektami|Zaprojektuj aplikację, która umożliwia zarządzanie projektami, przypisywanie zadań do członków zespołu i śledzenie postępów. Powinna zawierać formularze do tworzenia i edytowania projektów oraz zadań, a także kalendarz do planowania terminów. Zaimplementuj system uprawnień (np. administrator, użytkownik) oraz powiadomienia.|true|true|1733935382401|1735717236000|100|100|100|100|100|100|100|5
-                2|Aplikacja mobilna do bankowości|Stwórz aplikację mobilną z funkcjami bankowymi, umożliwiającą użytkownikom logowanie, sprawdzanie salda, dokonywanie przelewów oraz zarządzanie kontem. Zadbaj o bezpieczeństwo aplikacji, implementując autentykację dwuskładnikową i szyfrowanie danych. Użyj nowoczesnych frameworków mobilnych, takich jak Flutter lub React Native.|false|false|1733930990808|1742785028501|25|16|20|32|65|12|12|5
+                2|Aplikacja mobilna do bankowości|Stwórz aplikację mobilną z funkcjami bankowymi, umożliwiającą użytkownikom logowanie, sprawdzanie salda, dokonywanie przelewów oraz zarządzanie kontem. Zadbaj o bezpieczeństwo aplikacji, implementując autentykację dwuskładnikową i szyfrowanie danych. Użyj nowoczesnych frameworków mobilnych, takich jak Flutter lub React Native.|false|false|1733930990808|1742785028501|32|16|20|32|65|12|12|5
                 3|Sklep internetowy|Rozwijaj sklep internetowy z funkcjonalnościami e-commerce, takimi jak przeglądanie katalogu produktów, dodawanie ich do koszyka i proces zakupu. Zadbaj o integrację z systemami płatności, trackingiem zamówień oraz procesem realizacji dostaw. Stosuj technologię front-endową (HTML, CSS, JavaScript) oraz backendową (np. PHP, Node.js) z bazą danych MySQL lub MongoDB.|false|true|1733936204350|1740156007568|100|100|100|100|100|100|100|5
                 4|Strona internetowa dla eventu|Stwórz dedykowaną stronę internetową dla wydarzenia, która zawiera informacje o wydarzeniu, programie oraz możliwość rejestracji uczestników. Zadbaj o formularz rejestracyjny, opcję zakupu biletów i integrację z platformą płatniczą. Strona powinna być responsywna i atrakcyjna wizualnie.|false|true|1733932560462|1734984242089|100|100|100|100|100|100|100|5
                 5|Aplikacja mobilna dla sklepu|Zaprojektuj aplikację mobilną dla sklepu, umożliwiającą użytkownikom przeglądanie produktów, zarządzanie zamówieniami oraz śledzenie statusu dostawy. Integracja z systemem zarządzania produktami i płatnościami jest kluczowa. Aplikacja powinna oferować użytkownikowi powiadomienia push o promocjach i statusie zamówienia.|false|true|1733930309833|1735961490016|100|100|100|100|100|100|100|5
@@ -409,6 +431,56 @@ public class files {
         } catch (IOException e) {
             logger.warning("Błąd podczas odczytu pliku " + file + ": " + e.getMessage());
             return -1;
+        }
+    }
+
+    public static void editProjectsFile(int projectId, String newValue, Enums valueToChange) {
+        StringBuilder sb = new StringBuilder();
+
+        int positionToChange = -1;
+
+        positionToChange = switch (valueToChange) {
+            case PROJECT_CHANGE_NAME -> 0;
+            case PROJECT_CHANGE_DESCRIPTION -> 1;
+            case PROJECT_CHANGE_URGENT -> 2;
+            case PROJECT_CHANGE_DONE -> 3;
+            case PROJECT_CHANGE_DEADLINE -> 5;
+            case PROJECT_CHANGE_PROGRESS_ANALYSIS -> 6;
+            case PROJECT_CHANGE_PROGRESS_STRUCTURE -> 7;
+            case PROJECT_CHANGE_PROGRESS_DESIGN -> 8;
+            case PROJECT_CHANGE_PROGRESS_FRONTEND -> 9;
+            case PROJECT_CHANGE_PROGRESS_BACKEND -> 10;
+            case PROJECT_CHANGE_PROGRESS_TESTING -> 11;
+            case PROJECT_CHANGE_PROGRESS_OPTIMIZATION -> 12;
+            default -> positionToChange;
+        };
+
+        if (positionToChange == -1) {
+            logger.warning("Nie udało się zaktualizować pliku projektów.");
+            return;
+        }
+
+        Path projectsFile = Paths.get("projects.csv");
+        try {
+            for (String line : Files.readAllLines(projectsFile)) {
+                if (!line.isEmpty()) {
+                    if (line.startsWith(projectId + "|")) {
+                        int[] separators = getSeparatorsIndex(line, "|");
+                        sb.append(line.substring(0, separators[positionToChange] + 1)).append(newValue).append(line.substring(separators[positionToChange + 1])).append("\n");
+                    } else {
+                        sb.append(line).append("\n");
+                    }
+                }
+            }
+
+            try {
+                Files.writeString(projectsFile, sb.toString());
+            } catch (IOException ex) {
+                logger.severe("Nie udało się zapisać pliku projektów! " + ex.getMessage());
+            }
+        } catch (
+                IOException e) {
+            logger.severe("Nie udało się otworzyć pliku projektów! " + e.getMessage());
         }
     }
 }

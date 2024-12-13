@@ -14,6 +14,7 @@ public class users {
     private static final Logger logger = LoggerManager.getLogger();
 
     static int userId = -1;
+    static boolean userAdmin = false;
     static Enums whereIsUser = Enums.NOWHERE;
     static int userProjectPreviewID = -1;
 
@@ -38,6 +39,7 @@ public class users {
         if(files.loginUserPassword(username, password))
         {
             userId = files.getUserId(username);
+            userAdmin = files.getUserAdmin(userId);
             return true;
         }else {
             logger.warning("Podano nieprawidłowe hasło!");

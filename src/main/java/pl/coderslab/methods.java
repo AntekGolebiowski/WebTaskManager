@@ -1,11 +1,16 @@
 package pl.coderslab;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.logging.Logger;
 
 public class methods {
+    private static final Logger logger = LoggerManager.getLogger();
     public static String returnFomattedDate(long timestamp, String format){
         DateTimeFormatter formatter;
         LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
@@ -73,8 +78,17 @@ public class methods {
         return sb.toString();
     }
 
-    public static void help() {
-        //todo:panel pomocy
-        return;
+    public static long convertDateToTimestamp(String dateStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        try {
+            Date date = dateFormat.parse(dateStr);
+            return date.getTime();
+        } catch (ParseException e) {
+            logger.warning("Niepoprawny format daty. Oczekiwany format: dd/MM/yyyy. " + e.getMessage());
+            return -1;
+        }
     }
+
+
 }
